@@ -15,16 +15,15 @@ app.use(express.static(publicPath));
 
 io.on('connection', (socket) => {
     console.log('New user connected');
-
     socket.emit('newMessage', generateMessage('Admin', 'Welcome to TigChat'));
-    
     socket.broadcast.emit('newMessage', generateMessage('Admin', 'New user joined TigChat'))
     
-    socket.on('createMessage', (message) => {
+    socket.on('createMessage', (message, callback) => {
         console.log('createMessage', message);
         //to everyone
         io.emit('newMessage', generateMessage(message.from, message.text));
 
+        callback('this is form the server');
         //  // send to evrybody except this socket
         //  socket.broadcast.emit('newMessage', {
         //     from: message.from,
