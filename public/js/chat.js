@@ -28,8 +28,16 @@ socket.on('connect', function () {
         }
     });
 
-
     console.log('Connected to the server');
+});
+
+socket.on('updateUserList', function (users) {
+    var ol = $('<ol></ol>');
+    users.forEach(function (user) {
+        ol.append($('<li></li>').text(user));
+    });
+
+    $('#users').html(ol);
 });
 
 socket.on('disconnect', function () {
